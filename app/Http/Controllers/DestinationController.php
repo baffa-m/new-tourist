@@ -5,35 +5,46 @@ namespace App\Http\Controllers;
 use App\Models\Destination;
 use Illuminate\Http\Request;
 use App\Http\Requests\DestinationRequest;
+use App\Models\State;
 
 class DestinationController extends Controller
 {
     public function index()
     {
         $destinations = Destination::all();
-        return view('destinations.index', compact('destinations'));
+        return view('admin.destinations.index', compact('destinations'));
     }
 
     public function create()
     {
-        return view('destinations.create');
+        $states = State::all();
+        return view('admin.destinations.create', compact('states'));
     }
 
     public function store(DestinationRequest $request)
     {
-        $destination = Destination::create($request->validated());
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'image_path' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'state_id' => 'required|exists:states,id',
+        ]);
 
-        return redirect()->route('destinations.show', $destination);
+        $destination = Destination::create($validatedData);
+        return redirect()->route('destinations.index', $destination);
     }
 
     public function show(Destination $destination)
     {
-        return view('destinations.show', compact('destination'));
+        return view('admin.destinations.show', compact('destination'));
     }
 
     public function edit(Destination $destination)
     {
-        return view('destinations.edit', compact('destination'));
+        $states = State::all();
+        return view('admin.destinations.edit', compact('destination', 'states'));
     }
 
     public function update(DestinationRequest $request, Destination $destination)

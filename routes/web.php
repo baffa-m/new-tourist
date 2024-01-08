@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\DestinationController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\StateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +29,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('destination', DestinationController::class);
-    Route::resource('states', DestinationController::class);
+    Route::resource('destinations', DestinationController::class);
+
+    // Admin Routes (based on is_admin column)
+    Route::middleware(['admin'])->group(function () {
+        Route::get('admin', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::resource('state', StateController::class);
+        Route::resource('destination', DestinationController::class);
+    });
 
 });
 
