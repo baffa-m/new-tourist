@@ -11,7 +11,11 @@ class Preference extends Model
 
     protected $fillable = [
         'user_id',
-        'category_preferences',
+        'historic',
+        'shopping',
+        'nature_wildlife',
+        'parks',
+        'sports',
     ];
 
     // Relationships

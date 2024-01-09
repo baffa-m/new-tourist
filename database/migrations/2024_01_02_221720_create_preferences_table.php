@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('preferecnces', function (Blueprint $table) {
+        Schema::create('preferences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->json('category_preferences');
+            $table->boolean('historic')->default(false);
+            $table->boolean('shopping')->default(false);
+            $table->boolean('nature_wildlife')->default(false);
+            $table->boolean('parks')->default(false);
+            $table->boolean('sports')->default(false);
             $table->timestamps();
         });
     }

@@ -1,6 +1,6 @@
 <x-guest-layout>
 
-<div class="bg-white">
+<div class="bg-white dark:bg-gray-900">
 
     <main class="my-8">
         <div class="container mx-auto px-6">
