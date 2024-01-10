@@ -24,8 +24,8 @@ use App\Models\Destination;
 */
 
 Route::get('/', function () {
-    $trending_destinations = Destination::take(3)->get();
-    $new_destinations = Destination::orderBy('created_at',)->take(3)->get();
+    $trending_destinations = Destination::take(4)->get();
+    $new_destinations = Destination::orderBy('created_at',)->take(4)->get();
     return view('welcome', compact('trending_destinations', 'new_destinations'));
 })->name('home');
 
