@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DestinationController;
-use App\Http\Controllers\StateController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\StateController;
+use App\Http\Controllers\Admin\AdminState;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrefrenceController;
+use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\Admin\AdminDestination;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,8 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
         Route::get('admin', [AdminController::class, 'index'])->name('admin.dashboard');
-        Route::resource('state', StateController::class);
-        Route::resource('destination', DestinationController::class);
+        Route::resource('state', AdminState::class);
+        Route::resource('destination', AdminDestination::class);
     });
 
 });

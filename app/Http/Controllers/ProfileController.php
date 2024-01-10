@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\State;
 use Illuminate\View\View;
 use App\Models\Preference;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -19,8 +20,9 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $userPreferences = $user->preferences ?? new Preference();
+        $states = State::pluck('id', 'name');
 
-        return view('profile.edit', compact('user', 'userPreferences'));
+        return view('profile.edit', compact('user', 'userPreferences', 'states'));
     }
 
     /**

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\State;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class StateController extends Controller
+class AdminState extends Controller
 {
     public function index()
     {

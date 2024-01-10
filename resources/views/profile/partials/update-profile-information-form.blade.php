@@ -28,6 +28,19 @@
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
+            <div class="mt-4">
+                <label for="">
+                    State
+                </label>
+                <br>
+                <select name="state_id" id="">
+                    <option value="">Select a State</option>
+                    @foreach ($states as $state)
+                    <option value="id">{{ $state->state_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">

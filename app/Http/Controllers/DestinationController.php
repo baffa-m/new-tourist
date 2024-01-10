@@ -4,60 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Destination;
 use Illuminate\Http\Request;
-use App\Http\Requests\DestinationRequest;
-use App\Models\State;
 
 class DestinationController extends Controller
 {
-    public function index()
-    {
+    public function index() {
         $destinations = Destination::all();
-        return view('admin.destinations.index', compact('destinations'));
+        return view('destinations.index', compact('destinations'));
+
     }
 
-    public function create()
-    {
-        $states = State::all();
-        return view('admin.destinations.create', compact('states'));
-    }
-
-    public function store(DestinationRequest $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'location' => 'required|string|max:255',
-            'image_path' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
-            'state_id' => 'required|exists:states,id',
-        ]);
-
-        $destination = Destination::create($validatedData);
-        return redirect()->route('destinations.index', $destination);
-    }
-
-    public function show(Destination $destination)
-    {
-        return view('admin.destinations.show', compact('destination'));
-    }
-
-    public function edit(Destination $destination)
-    {
-        $states = State::all();
-        return view('admin.destinations.edit', compact('destination', 'states'));
-    }
-
-    public function update(DestinationRequest $request, Destination $destination)
-    {
-        $destination->update($request->validated());
-
-        return redirect()->route('destinations.show', $destination);
-    }
-
-    public function destroy(Destination $destination)
-    {
-        $destination->delete();
-
-        return redirect()->route('destinations.index');
+    public function show(Destination $destination) {
+        return view('destinations.show', compact('destination'));
     }
 }
