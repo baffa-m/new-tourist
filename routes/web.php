@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\Admin\AdminState;
@@ -10,6 +10,7 @@ use App\Http\Controllers\PrefrenceController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\Admin\AdminDestination;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Models\Destination;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,9 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $trending_destinations = Destination::take(3)->get();
+    $new_destinations = Destination::orderBy('created_at',)->take(3)->get();
+    return view('welcome', compact('trending_destinations', 'new_destinations'));
 })->name('home');
 
 Route::get('/dashboard', function () {
@@ -36,13 +39,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('hotel', HotelController::class);
-    Route::resource('destination', DestinationController::class);
+    Route::resource('hotels', HotelController::class);
+    Route::resource('destinations', DestinationController::class);
 
     // Admin Routes (based on is_admin column)
-    Route::middleware(['admin'])->group(function () {
+    Route::middleware(['admin'])->prefix('admin')->group(function () {
         Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-        Route::get('admin', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/', [AdminDestination::class, 'Dash'])->name('admin.dashboard');
         Route::resource('state', AdminState::class);
         Route::resource('destination', AdminDestination::class);
     });

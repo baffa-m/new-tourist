@@ -6,7 +6,7 @@
 <div class="container px-6 py-8 mx-auto">
     <h3 class="text-3xl font-medium text-gray-700">Dashboard</h3>
 
-    <form class="w-full" action="{{ route('destination.update', ['destination' => $destination])}}" method="POST">
+    <form class="w-full" action="{{ route('destination.update', ['destination' => $destination])}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('admin.destinations.form')

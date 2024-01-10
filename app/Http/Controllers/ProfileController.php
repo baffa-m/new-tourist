@@ -20,7 +20,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $userPreferences = $user->preferences ?? new Preference();
-        $states = State::pluck('id', 'name');
+        $states = State::all();
 
         return view('profile.edit', compact('user', 'userPreferences', 'states'));
     }

@@ -10,6 +10,11 @@ use App\Http\Requests\DestinationRequest;
 
 class AdminDestination extends Controller
 {
+
+    public function Dash() {
+        return view('admin.dashboard');
+    }
+
     public function index()
     {
         $destinations = Destination::all();
@@ -22,19 +27,26 @@ class AdminDestination extends Controller
         return view('admin.destinations.create', compact('states'));
     }
 
-    public function store(DestinationRequest $request)
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
-            'image_path' => 'required|string|max:255',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Assuming it's an image file
             'category' => 'required|string|max:255',
             'state_id' => 'required|exists:states,id',
         ]);
 
+        if ($request->hasFile('image_path')) {
+            $uploadedImage = $request->file('image_path');
+            $imagePath = $uploadedImage->store('uploads', 'public');
+            $validatedData['image_path'] = $imagePath;
+        }
+
         $destination = Destination::create($validatedData);
-        return redirect()->route('destinations.index', $destination);
+
+        return redirect()->route('destination.index')->with('success', 'Destination created successfully!');
     }
 
     public function show(Destination $destination)

@@ -4,15 +4,20 @@
         Name
     </label>
     <input value="{{ old('name', isset($destination->name) ? $destination->name : null) }}"
-     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="name" type="text" placeholder="e.g. Meseum">
-    <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-    </div>
+     class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="name" type="text" placeholder="e.g. Meseum">
+     @error('name')
+            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+    @enderror
+   </div>
     <div class="w-full md:w-1/2 px-3">
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
         Location
     </label>
     <input value="{{ old('location', isset($destination->location) ? $destination->location : null) }}"
     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="location" type="text" placeholder="Address">
+    @error('location')
+            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+        @enderror
     </div>
 </div>
 
@@ -25,6 +30,9 @@
      name="description" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="e.g. About the place">
      {{ old('description', isset($destination->description) ? $destination->description : null) }}
     </textarea>
+    @error('description')
+            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+    @enderror
     </div>
 </div>
 
@@ -36,6 +44,9 @@
       </label>
       <input name="image_path" value="{{ old('image_path', isset($destination->image_path) ? $destination->image_path : null) }}"
        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="file">
+       @error('image_path')
+       <p class="text-red-500 text-xs italic">{{ $message }}</p>
+   @enderror
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
