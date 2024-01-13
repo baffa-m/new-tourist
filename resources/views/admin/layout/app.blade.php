@@ -108,26 +108,42 @@
                             </div>
 
                             <div class="flex items-center">
-                                <div x-data="{ dropdownOpen: false }" class="relative">
-                                    <button @click="dropdownOpen = ! dropdownOpen"
-                                        class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none">
-                                        <img class="object-cover w-full h-full"
-                                            src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=296&amp;q=80"
-                                            alt="Your avatar">
-                                    </button>
+                                @auth
+                                <div class="ms-3 relative">
+                                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                                        <x-dropdown align="right" width="48">
+                                            <x-slot name="trigger">
+                                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                                    <div>{{ Auth::user()->name }}</div>
 
-                                    <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"
-                                        style="display: none;"></div>
+                                                    <div class="ms-1">
+                                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                </button>
+                                            </x-slot>
 
-                                    <div x-show="dropdownOpen"
-                                        class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
-                                        style="display: none;">
-                                        <a href="{{ route('profile.edit')}}"
-                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Profile</a>
-                                        <a href="{{ route('logout')}}"
-                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Logout</a>
+                                            <x-slot name="content">
+                                                <x-dropdown-link :href="route('profile.edit')">
+                                                    {{ __('Profile') }}
+                                                </x-dropdown-link>
+
+                                                <!-- Authentication -->
+                                                <form method="POST" action="{{ route('logout') }}">
+                                                    @csrf
+
+                                                    <x-dropdown-link :href="route('logout')"
+                                                            onclick="event.preventDefault();
+                                                                        this.closest('form').submit();">
+                                                        {{ __('Log Out') }}
+                                                    </x-dropdown-link>
+                                                </form>
+                                            </x-slot>
+                                        </x-dropdown>
                                     </div>
                                 </div>
+                                @endauth
                             </div>
                         </header>
                         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">

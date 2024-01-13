@@ -69,7 +69,14 @@
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
         Category
       </label>
-      <input value="{{ old('category', isset($destination->category) ? $destination->category: null) }}"
-      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="category" type="text" placeholder="e.g. Historical">
+      <select name="category" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            <option value="">Select an Option</option>
+            <option value="historic" {{ (old('category', isset($destination->category) ? $destination->category : null) == 'historic') ? 'selected' : '' }}>Historical</option>
+            <option value="shopping" {{ (old('category', isset($destination->category) ? $destination->category : null) == 'shopping') ? 'selected' : '' }}>Shopping</option>
+            <option value="nature_wildlife" {{ (old('category', isset($destination->category) ? $destination->category : null) == 'nature_wildlife') ? 'selected' : '' }}>Nature & Wildlife</option>
+            <option value="parks" {{ (old('category', isset($destination->category) ? $destination->category : null) == 'parks') ? 'selected' : '' }}>Parks</option>
+            <option value="sports" {{ (old('category', isset($destination->category) ? $destination->category : null) == 'sports') ? 'selected' : '' }}>Sports</option>
+        </select>
+
     </div>
   </div>

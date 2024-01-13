@@ -10,6 +10,7 @@ use App\Http\Controllers\PrefrenceController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\Admin\AdminDestination;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\RecommnedationController;
 use App\Models\Destination;
 
 /*
@@ -23,15 +24,7 @@ use App\Models\Destination;
 |
 */
 
-Route::get('/', function () {
-    $trending_destinations = Destination::take(4)->get();
-    $new_destinations = Destination::orderBy('created_at',)->take(4)->get();
-    return view('welcome', compact('trending_destinations', 'new_destinations'));
-})->name('home');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [RecommnedationController::class, 'recommendations'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::patch('/profile/preference', [PrefrenceController::class, 'update'])->name('preference.update');
@@ -44,7 +37,6 @@ Route::middleware('auth')->group(function () {
 
     // Admin Routes (based on is_admin column)
     Route::middleware(['admin'])->prefix('admin')->group(function () {
-        Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
         Route::get('/', [AdminDestination::class, 'Dash'])->name('admin.dashboard');
         Route::resource('state', AdminState::class);
         Route::resource('destination', AdminDestination::class);
