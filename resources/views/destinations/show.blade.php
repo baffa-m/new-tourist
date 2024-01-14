@@ -1,3 +1,5 @@
+<!-- destinations/show.blade.php -->
+
 <x-app-layout>
 
     <div class="bg-white">
@@ -22,20 +24,67 @@
                                     {{ $destination->location }}
                                 </p>
 
-
                                 <div>
                                     <span class="font-bold text-gray-700 dark:text-gray-300">Destination Description:</span>
                                     <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">
                                         {{ $destination->description}}
                                     </p>
                                 </div>
+
+                                <!-- Ratings and Comments Section -->
+                                <div class="mt-4">
+                                    <span class="font-bold text-gray-700 dark:text-gray-300">Ratings and Comments:</span>
+                                    <!-- You can customize the form and display based on your needs -->
+                                    <form id="review-form" action="{{ route('review.store') }}" method="post">
+                                        @csrf
+                                        <div>
+                                            <div class="flex items-center mt-2">
+                                                <span class="mr-2">Rate:</span>
+                                                <div id="rating-stars" class="flex flex-row-reverse">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <svg wire:click="setRating({{ $i }})" class="rating-star text-gray-600 cursor-pointer duration-100" width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                                        </svg>
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                            <textarea wire:model="comment" rows="3" class="w-full mt-2 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:border-blue-500" placeholder="Add your comment..."></textarea>
+                                            <button wire:click="submitReview" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">Submit Review</button>
+                                        </div>
+                                    </form>
+
+                                    @livewire('review-component', ['destination' => $destination])
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
-
     </div>
+
+    <script>
+        $(document).ready(function () {
+            const starsContainer = $('#rating-stars');
+            const ratingInput = $('#rating-input');
+            const reviewForm = $('#review-form');
+            const reviewsContainer = $('#reviews-container');
+            const paginationContainer = $('#pagination-container');
+
+            starsContainer.on('click', '.rating-star', function (event) {
+                const selectedValue = $(this).data('value');
+                ratingInput.val(selectedValue);
+
+                // Reset all stars
+                starsContainer.children().removeClass('text-yellow-400 peer-hover:text-yellow-400 hover:text-yellow-400');
+
+                // Highlight selected stars
+                $(this).addClass('text-yellow-400 peer-hover:text-yellow-400 hover:text-yellow-400');
+                $(this).prevAll().addClass('text-yellow-400 peer-hover:text-yellow-400 hover:text-yellow-400');
+            });
+
+        });
+    </script>
 
 </x-app-layout>

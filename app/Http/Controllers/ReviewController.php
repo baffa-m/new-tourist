@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReviewRequest;
+use App\Models\Destination;
 
 class ReviewController extends Controller
 {
@@ -18,13 +19,21 @@ class ReviewController extends Controller
         return view('reviews.create');
     }
 
-    public function store(ReviewRequest $request)
+    public function store(Request $request)
     {
-        $review = Review::create($request->validated());
+        $validatedData = $request->validate([
+            'rating' => 'nullable|integer|min:1|max:5',
+            'comment' => 'nullable|string',
+        ]);
 
-        return redirect()->route('reviews.show', $review);
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['destination_id'] = $request->destination_id;
+
+        $review = Review::create($validatedData);
+
+        return response()->json(['message' => 'Review submitted successfully.']);
     }
-
+    
     public function show(Review $review)
     {
         return view('reviews.show', compact('review'));

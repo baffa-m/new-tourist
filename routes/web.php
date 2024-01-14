@@ -11,6 +11,7 @@ use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\Admin\AdminDestination;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\RecommnedationController;
+use App\Http\Controllers\ReviewController;
 use App\Models\Destination;
 
 /*
@@ -33,7 +34,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('hotels', HotelController::class);
+
+    Route::get('destinations/{destination}/reviews', [DestinationController::class, 'fetchReviews'])->name('destination.reviews');
     Route::resource('destinations', DestinationController::class);
+    Route::resource('/review', ReviewController::class);
 
     // Admin Routes (based on is_admin column)
     Route::middleware(['admin'])->prefix('admin')->group(function () {

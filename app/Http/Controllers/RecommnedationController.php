@@ -24,8 +24,10 @@ class RecommnedationController extends Controller
             // Set recommended destinations to null
             $recommendedDestinations = null;
         }
-        if ($recommendedDestinations->isEmpty()) {
-            $recommendedDestinations = null;
+        if ($recommendedDestinations != null) {
+            if ($recommendedDestinations->isEmpty()) {
+                $recommendedDestinations = null;
+            }
         }
 
         $trending_destinations = Destination::take(4)->get();
