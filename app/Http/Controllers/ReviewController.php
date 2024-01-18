@@ -21,6 +21,7 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         $validatedData = $request->validate([
             'rating' => 'nullable|integer|min:1|max:5',
             'comment' => 'nullable|string',
@@ -33,7 +34,7 @@ class ReviewController extends Controller
 
         return response()->json(['message' => 'Review submitted successfully.']);
     }
-    
+
     public function show(Review $review)
     {
         return view('reviews.show', compact('review'));
