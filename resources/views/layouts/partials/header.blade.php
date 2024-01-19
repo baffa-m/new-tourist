@@ -1,8 +1,8 @@
 <header>
     <div class="container mx-auto px-6 py-3">
         <div class="flex items-center justify-between">
-            <div class="w-full text-gray-700 md:text-center text-2xl font-semibold">
-                Brand
+            <div class="w-full text-teal-700 md:text-center text-3xl font-semibold">
+                Tourly
             </div>
             <div class="flex items-center justify-end w-full">
 

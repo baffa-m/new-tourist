@@ -19,21 +19,7 @@ class ReviewController extends Controller
         return view('reviews.create');
     }
 
-    public function store(Request $request)
-    {
-        dd($request);
-        $validatedData = $request->validate([
-            'rating' => 'nullable|integer|min:1|max:5',
-            'comment' => 'nullable|string',
-        ]);
-
-        $validatedData['user_id'] = auth()->user()->id;
-        $validatedData['destination_id'] = $request->destination_id;
-
-        $review = Review::create($validatedData);
-
-        return response()->json(['message' => 'Review submitted successfully.']);
-    }
+    
 
     public function show(Review $review)
     {

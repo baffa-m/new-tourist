@@ -36,7 +36,9 @@
                 <select name="state_id" id="">
                     <option value="">Select a State</option>
                     @foreach ($states as $state)
-                    <option value="id">{{ $state->state_name }}</option>
+                    <option value="{{ $state->id }}" {{ $state->id == auth()->user()->state_id ? 'selected' : '' }}>
+                        {{ $state->state_name }}
+                    </option>
                     @endforeach
                 </select>
             </div>

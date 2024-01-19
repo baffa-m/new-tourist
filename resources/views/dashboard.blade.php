@@ -4,24 +4,26 @@
 
         <main class="my-8">
             <div class="container mx-auto px-6">
+                @isset($recommendedDestinations)
+                <h3 class="text-lg">Here Are Some Recommended Destinations Based on your Preferences</h3>
+                @endisset
                 <div class="my-6 rounded-2xl bg-gray-200">
                     @isset($recommendedDestinations)
-                    <h3>Here Are Some Recommended Destinations Based on your Preferences</h3>
                     <div id="default-carousel" class="relative" data-carousel="static">
                         <!-- Carousel wrapper -->
                         <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96">
                             <!-- Item 1 -->
                             @foreach ($recommendedDestinations as $destination)
                                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <div class="h-64 rounded-md overflow-hidden bg-cover bg-center" style="background-image: url('storage/{{ $destination->image_path }}')">
+                                    <div class="h-64 rounded-md overflow-hidden bg-cover bg-center" style="background-image: url({{ $destination->image_path }})">
                                         <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
                                             <div class="px-10 max-w-xl">
                                                 <h2 class="text-2xl text-white font-semibold">{{ $destination->name }}</h2>
                                                 <p class="mt-2 text-gray-400">{{ Str::limit($destination->description, 50) }}</p>
-                                                <button class="flex items-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                                <a href="{{ route('destinations.show', ['destination' => $destination])}}" class="flex items-center mt-4 pl-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                                                     <span>View</span>
                                                     <svg class="h-5 w-5 mx-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                                                </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -52,20 +54,21 @@
                     <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
                 </div>
 
-
                 <div class="md:flex mt-8 md:-mx-4">
-                    <div class="w-full h-64 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:w-1/2" style="background-image: url('https://images.unsplash.com/photo-1547949003-9792a18a2601?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80')">
+                    @isset($high_review_destination)
+                    <div class="w-full h-64 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:w-1/2" style="background-image: url({{ asset($high_review_destination->image_path)}})">
                         <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
                             <div class="px-10 max-w-xl">
-                                <h2 class="text-2xl text-white font-semibold">Add Destination high reviews here</h2>
-                                <p class="mt-2 text-gray-400">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.</p>
-                                <button class="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
-                                    <span>Shop Now</span>
+                                <p class="mt-2 text-gray-400">View destination with highest review in your location.</p>
+                                <h2 class="text-2xl text-white font-semibold">{{ $high_review_destination->name }}</h2>
+                                <a href="{{ route('destinations.show', ['destination' => $high_review_destination])}}" class="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
+                                    <span>View</span>
                                     <svg class="h-5 w-5 mx-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
+                    @endisset
                     <div class="w-full h-64 mt-8 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:mt-0 md:w-1/2" style="background-image: url('https://images.unsplash.com/photo-1486401899868-0e435ed85128?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80')">
                         <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
                             <div class="px-10 max-w-xl">
@@ -85,7 +88,7 @@
                         @foreach ($trending_destinations as $destination)
                             <a href="{{ route('destinations.show', ['destination' => $destination])}}">
                                 <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url('storage/{{ $destination->image_path }}')"></div>
+                                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url({{ $destination->image_path }})"></div>
                                     <div class="px-5 py-3">
                                         <h3 class="text-gray-700 uppercase">{{ $destination->name}}</h3>
                                         <span class="text-gray-500 mt-2">{{ $destination->location }}</span>
@@ -101,7 +104,7 @@
                         @foreach ($new_destinations as $destination)
                             <a href="{{ route('destinations.show', ['destination' => $destination])}}">
                                 <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url('storage/{{ $destination->image_path }}')"></div>
+                                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url({{ $destination->image_path }})"></div>
                                     <div class="px-5 py-3">
                                         <h3 class="text-gray-700 uppercase">{{ $destination->name}}</h3>
                                         <span class="text-gray-500 mt-2">{{ $destination->location }}</span>

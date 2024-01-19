@@ -17,6 +17,8 @@ class RecommnedationController extends Controller
             // Get user preferences if available
             $preferences = $user->preferences;
 
+            $state = $user->state_id;
+
             // Query recommended destinations based on user preferences
             $recommendedDestinations = $this->getRecommendedDestinations($preferences);
         } else {
@@ -30,11 +32,24 @@ class RecommnedationController extends Controller
             }
         }
 
-        $trending_destinations = Destination::take(4)->get();
-        $new_destinations = Destination::orderBy('created_at')->take(4)->get();
+        if ($user) {
+            $trending_destinations = Destination::where('state_id', $state)->take(6)->get();
+            $new_destinations = Destination::orderBy('created_at', 'desc')->take(4)->get();
+            $high_review_destination = Destination::withCount('reviews')
+            ->where('state_id', $state)
+            ->orderByDesc('reviews_count')
+            ->first();
 
-        // Return the recommended destinations
-        return view('dashboard', compact('recommendedDestinations', 'trending_destinations', 'new_destinations'));
+
+            // Return the recommended destinations
+            return view('dashboard', compact('recommendedDestinations', 'trending_destinations', 'new_destinations', 'high_review_destination'));
+        }
+
+        $trending_destinations = Destination::all()->take(6);
+        $new_destinations = Destination::orderBy('created_at', 'desc')->take(4)->get();
+
+        return view('dashboard', compact('trending_destinations', 'new_destinations'));
+
     }
 
     /**
@@ -65,7 +80,9 @@ class RecommnedationController extends Controller
                 ->when($preferences->sports, function ($query) {
                     $query->orWhere('category', 'LIKE', 'sports');
                 });
+
         })
+        ->where('state_id', auth()->user()->state_id)
         ->inRandomOrder()
         ->limit(5)
         ->get();
