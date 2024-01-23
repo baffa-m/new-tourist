@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrefrenceController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\Admin\AdminDestination;
+use App\Http\Controllers\Admin\AdminHotel;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\RecommnedationController;
 use App\Http\Controllers\ReviewController;
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('destinations/{destination}/reviews', [DestinationController::class, 'fetchReviews'])->name('destination.reviews');
     Route::resource('destinations', DestinationController::class);
+    Route::resource('hotels', HotelController::class);
     Route::resource('/review', ReviewController::class);
 
     // Admin Routes (based on is_admin column)
@@ -44,6 +46,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AdminDestination::class, 'Dash'])->name('admin.dashboard');
         Route::resource('state', AdminState::class);
         Route::resource('destination', AdminDestination::class);
+        Route::resource('hotel', AdminHotel::class);
+
     });
 
 });

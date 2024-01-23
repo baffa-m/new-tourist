@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destination;
+use App\Models\Hotel;
 use Illuminate\Http\Request;
 
 class RecommnedationController extends Controller
@@ -40,9 +41,11 @@ class RecommnedationController extends Controller
             ->orderByDesc('reviews_count')
             ->first();
 
+            $recommended_hotel = Hotel::where('state_id', auth()->user()->state_id)->inRandomOrder()->first();
+
 
             // Return the recommended destinations
-            return view('dashboard', compact('recommendedDestinations', 'trending_destinations', 'new_destinations', 'high_review_destination'));
+            return view('dashboard', compact('recommendedDestinations', 'trending_destinations', 'new_destinations', 'high_review_destination', 'recommended_hotel'));
         }
 
         $trending_destinations = Destination::all()->take(6);

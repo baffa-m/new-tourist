@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" class="w-80" action="{{ route('register') }}">
         @csrf
 
         <!-- Name -->
@@ -24,7 +24,12 @@
                             type="password"
                             name="password"
                             required autocomplete="new-password" />
-
+                <div class="text-xs">
+                    <ul>
+                        <li>The password should not be less than 8 characters</li>
+                        <li>The password should not be more than 16 char characters</li>
+                    </ul>
+                </div>
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
@@ -37,6 +42,68 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+        <h4 class="mt-2">Preferences</h4>
+        <div>
+            <div class="my-2">
+                Historic
+                <label for="historic_yes">
+                    <input type="radio" name="historic" id="historic_yes" value="1">
+                    Yes
+                </label>
+                <label for="historic_no">
+                    <input type="radio" name="historic" id="historic_no" value="0">
+                    No
+                </label>
+            </div>
+
+            <div class="my-2">
+                Shopping
+                <label for="shopping_yes">
+                    <input type="radio" name="shopping" id="shopping_yes" value="1">
+                    Yes
+                </label>
+                <label for="shopping_no">
+                    <input type="radio" name="shopping" id="shopping_no" value="0">
+                    No
+                </label>
+            </div>
+
+            <div class="my-2">
+                Nature and Wildlife
+                <label for="nature_yes">
+                    <input type="radio" name="nature_wildlife" id="nature_yes" value="1">
+                    Yes
+                </label>
+                <label for="nature_no">
+                    <input type="radio" name="nature_wildlife" id="nature_no" value="0">
+                    No
+                </label>
+            </div>
+
+            <div class="my-2">
+                Parks
+                <label for="parks_yes">
+                    <input type="radio" name="parks" id="parks_yes" value="1">
+                    Yes
+                </label>
+                <label for="parks_no">
+                    <input type="radio" name="parks" id="parks_no" value="0">
+                    No
+                </label>
+            </div>
+
+            <div class="my-2">
+                Sports
+                <label for="sports_yes">
+                    <input type="radio" name="sports" id="sports_yes" value="1">
+                    Yes
+                </label>
+                <label for="sports_no">
+                    <input type="radio" name="sports" id="sports_no" value="0">
+                    No
+                </label>
+            </div>
         </div>
 
         <div class="flex items-center justify-end mt-4">

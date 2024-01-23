@@ -64,13 +64,13 @@ class AdminDestination extends Controller
     {
         $destination->update($request->validated());
 
-        return redirect()->route('destinations.show', $destination);
+        return redirect()->route('destination.show', $destination);
     }
 
     public function destroy(Destination $destination)
     {
         $destination->delete();
 
-        return redirect()->route('destinations.index');
+        return redirect()->route('destination.index');
     }
 }
