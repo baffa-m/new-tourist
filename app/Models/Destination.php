@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\State;
 use App\Models\Review;
+use App\Models\Upload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +17,7 @@ class Destination extends Model
         'name',
         'description',
         'location',
-        'image_path',
+        'images',
         'category',
         'state_id'
     ];
@@ -29,5 +30,10 @@ class Destination extends Model
 
     public function state():BelongsTo {
         return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function uploads()
+    {
+        return $this->hasMany(Upload::class);
     }
 }

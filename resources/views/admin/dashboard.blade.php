@@ -35,8 +35,8 @@
                     </div>
 
                     <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">8,282</h4>
-                        <div class="text-gray-500">New Users</div>
+                        <h4 class="text-2xl font-semibold text-gray-700">{{ $users_count }}</h4>
+                        <div class="text-gray-500">Registered Users</div>
                     </div>
                 </div>
             </div>
@@ -59,8 +59,8 @@
                     </div>
 
                     <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">200,521</h4>
-                        <div class="text-gray-500">Total Orders</div>
+                        <h4 class="text-2xl font-semibold text-gray-700">{{ $states_count }}</h4>
+                        <div class="text-gray-500">States</div>
                     </div>
                 </div>
             </div>
@@ -79,8 +79,8 @@
                     </div>
 
                     <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">215,542</h4>
-                        <div class="text-gray-500">Available Products</div>
+                        <h4 class="text-2xl font-semibold text-gray-700">{{ $destinations_count }}</h4>
+                        <div class="text-gray-500">Available Destinations</div>
                     </div>
                 </div>
             </div>

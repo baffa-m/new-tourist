@@ -14,8 +14,10 @@
                         <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96">
                             <!-- Item 1 -->
                             @foreach ($recommendedDestinations as $destination)
+                            @php $mainImage = $destination->uploads->first(); @endphp
+
                                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <div class="h-64 rounded-md overflow-hidden bg-cover bg-center" style="background-image: url({{ $destination->image_path }})">
+                                    <div class="h-64 rounded-md overflow-hidden bg-cover bg-center" style="background-image: url({{ $mainImage->image_path }}); background-size: cover; height: 100%">
                                         <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
                                             <div class="px-10 max-w-xl">
                                                 <h2 class="text-2xl text-white font-semibold">{{ $destination->name }}</h2>
@@ -56,7 +58,9 @@
 
                 <div class="md:flex mt-8 md:-mx-4">
                     @isset($high_review_destination)
-                    <div class="w-full h-64 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:w-1/2" style="background-image: url({{ asset($high_review_destination->image_path)}})">
+                    @php $mainImage = $high_review_destination->uploads->first(); @endphp
+
+                    <div class="w-full h-64 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:w-1/2" style="background-image: url({{ asset($mainImage->image_path)}})">
                         <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
                             <div class="px-10 max-w-xl">
                                 <p class="mt-2 text-gray-400">View destination with highest review in your location.</p>
@@ -70,6 +74,7 @@
                     </div>
                     @endisset
                     @isset($recommended_hotel)
+
                     <div class="w-full h-64 mt-8 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:mt-0 md:w-1/2" style="background-image: url({{ asset($recommended_hotel->image_path)}})">
                         <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
                             <div class="px-10 max-w-xl">
@@ -86,9 +91,10 @@
                     <h3 class="text-gray-600 text-2xl font-medium">Trending</h3>
                     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                         @foreach ($trending_destinations as $destination)
+                        @php $mainImage = $destination->uploads->first(); @endphp
                             <a href="{{ route('destinations.show', ['destination' => $destination])}}">
                                 <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url({{ $destination->image_path }})"></div>
+                                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url({{ $mainImage->image_path }})"></div>
                                     <div class="px-5 py-3">
                                         <h3 class="text-gray-700 uppercase">{{ $destination->name}}</h3>
                                         <span class="text-gray-500 mt-2">{{ $destination->location }}</span>
@@ -102,9 +108,10 @@
                     <h3 class="text-gray-600 text-2xl font-medium">New Destinations</h3>
                     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                         @foreach ($new_destinations as $destination)
+                        @php $mainImage = $destination->uploads->first(); @endphp
                             <a href="{{ route('destinations.show', ['destination' => $destination])}}">
                                 <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url({{ $destination->image_path }})"></div>
+                                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url({{ $mainImage->image_path }})"></div>
                                     <div class="px-5 py-3">
                                         <h3 class="text-gray-700 uppercase">{{ $destination->name}}</h3>
                                         <span class="text-gray-500 mt-2">{{ $destination->location }}</span>
